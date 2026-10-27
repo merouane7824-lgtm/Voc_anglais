@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hello Bébé</title>
+<meta name="description" content="L'anglais du quotidien à dire à bébé : phrases et vocabulaire par moment de la journée, avec audio.">
+<meta name="theme-color" content="#F6F7FC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11132A" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hello Bébé">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bagel+Fat+One&display=swap">
+<style>
+/* Layout: one mobile-first column; each daily routine is a flat colored "board-book" square that carries its color into the theme page */
+:root{
+  --paper:#F6F7FC; --card:#FFFFFF; --ink:#1E2140; --muted:#5C6083; --line:#E1E4F0; --soft:#ECEEF8;
+  --accent:#4B4FB8; --accent-ink:#FFFFFF; --gold:#D08F00; --good:#1C8A57;
+  --f-display:"Bagel Fat One","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11132A; --card:#1B1E39; --ink:#EEF0FB; --muted:#A6AACA; --line:#2C3054; --soft:#252949;
+    --accent:#AEB1FF; --accent-ink:#14162E; --gold:#FFC94D; --good:#5FD39B; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11132A; --card:#1B1E39; --ink:#EEF0FB; --muted:#A6AACA; --line:#2C3054; --soft:#252949;
+  --accent:#AEB1FF; --accent-ink:#14162E; --gold:#FFC94D; --good:#5FD39B; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3{margin:0;text-wrap:balance}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 56px}
+
+/* ---------- Home ---------- */
+.home-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-block:6px 18px}
+.brand{font-family:var(--f-display);font-weight:400;font-size:clamp(2.3rem,9vw,3.1rem);line-height:.95;letter-spacing:.005em}
+.brand span{color:var(--accent)}
+.lede{color:var(--muted);margin:8px 0 0;max-width:36ch}
+.favbtn{flex:none;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);text-decoration:none;font-weight:700;font-variant-numeric:tabular-nums}
+.favbtn svg{width:20px;height:20px;color:var(--gold)}
+.notice{background:var(--soft);border-radius:14px;padding:10px 14px;color:var(--muted);font-size:.92rem;margin-bottom:12px}
+
+.today{background:var(--accent);color:var(--accent-ink);border-radius:26px;padding:18px 18px 16px}
+.eyebrow{text-transform:uppercase;letter-spacing:.09em;font-size:.74rem;font-weight:700;opacity:.85}
+.today h2{font-family:var(--f-display);font-weight:400;font-size:1.65rem;line-height:1.1;margin-top:4px}
+.today .rows{margin:8px 0 12px}
+.today .row{padding:10px 0;background:none}
+.today .rows > li + li{border-top:1px solid color-mix(in srgb,var(--accent-ink) 22%,transparent)}
+.today .play{background:var(--accent-ink);color:var(--accent)}
+.today .fr,.today .kicker{color:inherit;opacity:.8}
+.today .tog{color:inherit;opacity:.75}
+.today .tog[aria-pressed="true"]{opacity:1}
+.btn.inv{background:var(--accent-ink);color:var(--accent);width:100%;justify-content:center}
+
+.moment{display:flex;align-items:center;gap:12px;margin-top:12px;padding:12px 14px;border-radius:18px;background:var(--card);border:1px solid var(--line);text-decoration:none}
+.moment .glyph{width:42px;height:42px;border-radius:12px}
+.moment .glyph svg{width:24px;height:24px}
+.moment small{display:block;color:var(--muted);font-size:.84rem;line-height:1.3}
+.moment b{font-size:1.06rem}
+.moment .chev{margin-left:auto;color:var(--muted);width:20px;height:20px;flex:none}
+
+.search{margin-top:22px;position:relative}
+.search input{width:100%;font:inherit;font-size:1rem;padding:13px 16px 13px 46px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.search input::placeholder{color:var(--muted)}
+.search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--muted);pointer-events:none}
+
+.group-h{font-size:.76rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:28px 0 10px;font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:600px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tile{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:20px;background:var(--card);border:1px solid var(--line);text-decoration:none;min-width:0;transition:transform .15s ease}
+.tile:active{transform:scale(.98)}
+.glyph{width:54px;height:54px;border-radius:15px;background:var(--tile);color:var(--tile-fg);display:grid;place-items:center;flex:none}
+.glyph svg{width:30px;height:30px}
+.tile .name{font-weight:700;font-size:1.02rem;line-height:1.2;margin-top:4px}
+.tile .sub{color:var(--muted);font-size:.86rem;line-height:1.2;margin-top:-4px}
+.meter{display:block;height:6px;border-radius:3px;background:var(--soft);overflow:hidden;margin-top:auto}
+.meter i{display:block;height:100%;background:var(--tile);border-radius:3px;transition:width .3s ease}
+.count{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.settings .setlist{background:var(--card);border:1px solid var(--line);border-radius:20px}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;flex-wrap:wrap}
+.setrow + .setrow{border-top:1px solid var(--line)}
+.setrow > div:first-child{min-width:0;flex:1 1 160px}
+.setrow small{display:block;color:var(--muted);font-size:.84rem}
+.confirm{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.foot{color:var(--muted);font-size:.86rem;margin-top:22px;text-align:center}
+
+/* ---------- Shared controls ---------- */
+.seg{display:inline-flex;background:var(--soft);border-radius:999px;padding:4px;gap:2px;flex:none}
+.seg button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:.92rem;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.seg button span{font-weight:400;opacity:.8;font-variant-numeric:tabular-nums}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(20,22,46,.12)}
+.btn{border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:11px 18px;border-radius:999px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap;text-decoration:none}
+.btn svg{width:18px;height:18px}
+.btn.sm{padding:9px 14px;font-size:.92rem}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn.ghost[aria-pressed="true"]{background:var(--soft);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.btn.danger{background:#C2412D;color:#fff}
+
+/* Phrase rows */
+.rows{list-style:none;margin:0;padding:0}
+.list{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.rows > li + li{border-top:1px solid var(--line)}
+.row{display:flex;align-items:center;gap:12px;padding:12px 10px 12px 14px;transition:background .2s ease}
+.row.speaking{background:color-mix(in srgb,var(--tile) 16%,transparent)}
+.play{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--tile);color:var(--tile-fg);display:grid;place-items:center;cursor:pointer}
+.play svg{width:20px;height:20px}
+.row.speaking .play,.word.speaking{animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--tile) 70%,transparent)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--tile) 0%,transparent)}}
+.txt{flex:1;min-width:0;cursor:pointer}
+.en{font-weight:700;font-size:1.12rem;line-height:1.3}
+.fr{color:var(--muted);font-size:.95rem;line-height:1.35;margin-top:2px}
+.kicker{display:flex;align-items:center;gap:6px;font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;margin-bottom:2px}
+.kicker i{width:9px;height:9px;border-radius:3px;background:var(--tile);flex:none}
+.tog{flex:none;width:38px;height:38px;border:0;background:transparent;color:var(--muted);border-radius:50%;display:grid;place-items:center;cursor:pointer;margin-left:-4px}
+.tog svg{width:21px;height:21px}
+.tog.star[aria-pressed="true"]{color:var(--gold)}
+.tog.star[aria-pressed="true"] svg{fill:currentColor}
+.tog.done[aria-pressed="true"]{color:var(--good)}
+.tog.done[aria-pressed="true"] svg{stroke-width:3.2}
+mark{background:color-mix(in srgb,var(--tile) 42%,transparent);color:inherit;border-radius:5px;padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hint{color:var(--muted);font-size:.9rem;margin:0 0 10px}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:20px;padding:22px;color:var(--muted);text-align:center}
+
+/* ---------- Theme page ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;align-items:center;gap:10px;padding-block:8px;margin-bottom:8px}
+.back{display:inline-flex;align-items:center;gap:4px;text-decoration:none;font-weight:700;color:var(--accent);height:40px;padding-right:8px}
+.back svg{width:22px;height:22px}
+.topt{margin-left:auto;color:var(--muted);font-size:.9rem;font-weight:700;opacity:0;transition:opacity .2s}
+.topbar.scrolled .topt{opacity:1}
+.hero{background:var(--tile);color:var(--tile-fg);border-radius:26px;padding:20px;display:grid;grid-template-columns:auto 1fr;gap:12px 16px;align-items:center}
+.hero .big{width:76px;height:76px;border-radius:20px;background:color-mix(in srgb,var(--tile-fg) 10%,transparent);display:grid;place-items:center}
+.hero .big svg{width:44px;height:44px}
+.hero h1{font-family:var(--f-display);font-weight:400;font-size:clamp(1.8rem,7.5vw,2.5rem);line-height:1.02}
+.hero .en-title{font-weight:700;opacity:.78;margin-top:4px}
+.tip{grid-column:1/-1;margin:4px 0 0;background:color-mix(in srgb,var(--tile-fg) 9%,transparent);border-radius:16px;padding:12px 14px;font-size:.95rem;line-height:1.45}
+.tip b{display:block;text-transform:uppercase;letter-spacing:.09em;font-size:.72rem;margin-bottom:2px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:18px 0 12px}
+.tb-actions{display:flex;gap:8px;flex-wrap:wrap}
+.progress{display:flex;align-items:center;gap:12px;margin:0 0 12px;color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.progress .meter{flex:1;margin:0}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.word{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0}
+.word b{font-size:1.1rem;line-height:1.25;overflow-wrap:anywhere}
+.word span{color:var(--muted);font-size:.88rem;line-height:1.3}
+.word.speaking{border-color:var(--tile);background:color-mix(in srgb,var(--tile) 14%,var(--card))}
+.page-h{font-family:var(--f-display);font-weight:400;font-size:clamp(1.9rem,8vw,2.5rem);line-height:1.05;margin-top:6px}
+
+/* ---------- Practice ---------- */
+#practice{position:fixed;inset:0;z-index:20;background:var(--paper);overflow:auto;padding:calc(env(safe-area-inset-top,0px) + 14px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 24px) max(16px,env(safe-area-inset-left,0px))}
+.pr-inner{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.pr-top{display:flex;align-items:center;gap:12px}
+.iconbtn{appearance:none;border:1px solid var(--line);background:var(--card);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;flex:none}
+.iconbtn svg{width:20px;height:20px}
+.pr-bar{flex:1;height:8px;border-radius:4px;background:var(--soft);overflow:hidden}
+.pr-bar i{display:block;height:100%;background:var(--accent);border-radius:4px;transition:width .3s ease}
+.pr-count{font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.92rem}
+.pr-card{background:var(--tile);color:var(--tile-fg);border-radius:30px;padding:28px 22px;min-height:300px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;text-align:center}
+.pr-theme{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;font-weight:700;opacity:.8}
+.pr-theme svg{width:20px;height:20px}
+.pr-q{opacity:.75;font-size:.95rem}
+.pr-fr{font-size:1.45rem;font-weight:700;line-height:1.3;text-wrap:balance}
+.pr-en{font-family:var(--f-display);font-size:clamp(1.8rem,7.5vw,2.4rem);line-height:1.12;text-wrap:balance;margin-top:6px;animation:pop .35s ease}
+@keyframes pop{from{transform:scale(.92);opacity:.4}to{transform:none;opacity:1}}
+.pr-listen{border:0;background:color-mix(in srgb,var(--tile-fg) 12%,transparent);color:inherit;border-radius:999px;padding:8px 14px;font-weight:700;display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.pr-listen svg{width:18px;height:18px}
+.pr-say{color:var(--muted);text-align:center;font-size:.92rem;margin:0}
+.pr-actions{display:flex;gap:10px}
+.pr-actions .btn{flex:1;justify-content:center;padding:15px 18px;font-size:1.02rem}
+.pr-score{font-family:var(--f-display);font-size:4rem;line-height:1;font-variant-numeric:tabular-nums}
+
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translate(-50%,16px);opacity:0;transition:opacity .25s,transform .25s;background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-weight:700;font-size:.92rem;z-index:30;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .row.speaking .play,.word.speaking{outline:3px solid var(--ink);outline-offset:2px}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div id="practice" hidden role="dialog" aria-modal="true" aria-label="Entraînement"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+document.documentElement.lang = "fr";
+
+/* ================= Contenu ================= */
+const THEMES = [
+{ id:"reveil", group:"matin", fr:"Le réveil", en:"Wake up", bg:"#FFE066", fg:"#1E2140", icon:"sun",
+  tip:"Commence chaque matin par la même petite phrase. La routine aide bébé à associer les mots aux moments.",
+  phrases:[
+  "Good morning, sweetheart!|Bonjour mon cœur !",
+  "Did you sleep well?|Tu as bien dormi ?",
+  "Did you have sweet dreams?|Tu as fait de beaux rêves ?",
+  "Rise and shine!|Debout, petit soleil !",
+  "What a big stretch!|Oh, le grand étirement !",
+  "Come here, up you get!|Viens là, hop, debout !",
+  "You're all warm and cozy.|Tu es tout chaud et tout douillet.",
+  "Let's open the curtains.|On ouvre les rideaux.",
+  "Look, the sun is up!|Regarde, le soleil est levé !",
+  "Let's say good morning to Daddy.|On dit bonjour à papa.",
+  "Are you hungry?|Tu as faim ?",
+  "Let's start the day!|On commence la journée !"],
+  words:["bed|lit","crib|lit à barreaux","blanket|couverture","pillow|oreiller","curtains|rideaux","window|fenêtre","morning|matin","sun|soleil","wake up|se réveiller","stretch|s'étirer","yawn|bâiller","good morning|bonjour (le matin)"]},
+
+{ id:"habillage", group:"matin", fr:"Change & habillage", en:"Diapers & dressing", bg:"#F7B2C9", fg:"#1E2140", icon:"shirt",
+  tip:"Le change est un vrai tête-à-tête : nomme chaque vêtement et chaque partie du corps au moment où tu les touches.",
+  phrases:[
+  "Let's change your diaper.|On change ta couche.",
+  "Lie down, please.|Allonge-toi, s'il te plaît.",
+  "Phew, that's stinky!|Pouah, ça sent mauvais !",
+  "All clean now!|Tout propre maintenant !",
+  "Let's get dressed.|On s'habille.",
+  "Arms up!|Les bras en l'air !",
+  "Where's your hand? Here it is!|Où est ta main ? La voilà !",
+  "Push your arm through the sleeve.|Passe ton bras dans la manche.",
+  "Let's put on your socks.|On met tes chaussettes.",
+  "One foot, then the other foot.|Un pied, puis l'autre pied.",
+  "The red shirt or the blue shirt?|Le t-shirt rouge ou le t-shirt bleu ?",
+  "Let's zip up your coat.|On ferme ton manteau.",
+  "You look so cute!|Tu es trop mignon !"],
+  words:["diaper|couche","wipes|lingettes","cream|crème","shirt|t-shirt","pants|pantalon","socks|chaussettes","shoes|chaussures","coat|manteau","hat|bonnet","pajamas|pyjama","sleeve|manche","button|bouton","zipper|fermeture éclair"]},
+
+{ id:"jeux", group:"journee", fr:"Jeux d'éveil", en:"Playtime", bg:"#B79CFF", fg:"#1E2140", icon:"blocks",
+  tip:"Laisse bébé mener le jeu et décris ce qu'il fait : « You're stacking the blocks! ». C'est ce qu'on appelle le « parallel talk ».",
+  phrases:[
+  "Let's play!|On joue !",
+  "Where's the ball? There it is!|Où est la balle ? La voilà !",
+  "Roll the ball to me.|Fais rouler la balle vers moi.",
+  "Can you build a tower?|Tu peux construire une tour ?",
+  "One block, two blocks, three blocks!|Un cube, deux cubes, trois cubes !",
+  "Uh-oh! It fell down!|Oh oh ! C'est tombé !",
+  "Your turn!|À toi !",
+  "My turn!|À moi !",
+  "Put it in the box.|Mets-le dans la boîte.",
+  "Push the button!|Appuie sur le bouton !",
+  "Shake, shake, shake!|On secoue, on secoue !",
+  "Clap your hands!|Tape dans tes mains !",
+  "Let's read a book.|On lit un livre.",
+  "Good job!|Bravo !"],
+  words:["toy|jouet","ball|balle","block|cube","book|livre","teddy bear|nounours","doll|poupée","rattle|hochet","puzzle|puzzle","box|boîte","big|grand","small|petit","up|en haut","down|en bas","in|dedans","out|dehors"]},
+
+{ id:"corps", group:"journee", fr:"Mon corps", en:"My body", bg:"#FFC2A1", fg:"#1E2140", icon:"body",
+  tip:"Touche la partie du corps de bébé en la nommant, puis la tienne. Il finira par la montrer tout seul.",
+  phrases:[
+  "Where's your nose?|Où est ton nez ?",
+  "Here's your nose!|Voilà ton nez !",
+  "Touch your head.|Touche ta tête.",
+  "Two eyes, one nose, one mouth.|Deux yeux, un nez, une bouche.",
+  "Show me your tummy.|Montre-moi ton ventre.",
+  "Wiggle your toes!|Bouge tes orteils !",
+  "I'm going to tickle you!|Je vais te chatouiller !",
+  "How big are you? So big!|Tu es grand comment ? Grand comme ça !",
+  "Where are Mommy's ears?|Où sont les oreilles de maman ?",
+  "Stamp your feet!|Tape des pieds !",
+  "Wave bye-bye!|Fais au revoir de la main !",
+  "Blow a kiss!|Envoie un bisou !"],
+  words:["head|tête","hair|cheveux","eyes|yeux","ears|oreilles","nose|nez","mouth|bouche","cheeks|joues","hands|mains","fingers|doigts","arms|bras","tummy|ventre","legs|jambes","knees|genoux","feet|pieds","toes|orteils"]},
+
+{ id:"animaux", group:"journee", fr:"Les animaux", en:"Animals", bg:"#DDBB8A", fg:"#1E2140", icon:"paw",
+  tip:"Associe chaque animal à son cri : les onomatopées sont souvent parmi les tout premiers « mots » de bébé.",
+  phrases:[
+  "Look, a dog! Woof woof!|Regarde, un chien ! Ouaf ouaf !",
+  "The cat says meow.|Le chat fait miaou.",
+  "What does the cow say? Moo!|Que dit la vache ? Meuh !",
+  "The duck says quack quack.|Le canard fait coin-coin.",
+  "Where's the sheep? Baa!|Où est le mouton ? Bêê !",
+  "The pig says oink oink.|Le cochon fait groin-groin.",
+  "Can you roar like a lion?|Tu peux rugir comme un lion ?",
+  "Hop like a bunny!|Saute comme un lapin !",
+  "The bird is flying in the sky.|L'oiseau vole dans le ciel.",
+  "The fish swims in the water.|Le poisson nage dans l'eau.",
+  "Gently, stroke the kitty.|Doucement, caresse le minou.",
+  "Bye-bye, doggy!|Au revoir, le toutou !"],
+  words:["dog|chien","cat|chat","cow|vache","duck|canard","sheep|mouton","pig|cochon","horse|cheval","chicken|poule","bird|oiseau","fish|poisson","bunny|lapin","lion|lion","elephant|éléphant","monkey|singe"]},
+
+{ id:"couleurs", group:"journee", fr:"Couleurs & chiffres", en:"Colors & numbers", bg:"#F2A7E0", fg:"#1E2140", icon:"dots",
+  tip:"Les couleurs et les chiffres se glissent partout : compte les marches, nomme la couleur du bol. Pas besoin d'un moment dédié.",
+  phrases:[
+  "What color is it?|C'est de quelle couleur ?",
+  "It's red, like a strawberry!|C'est rouge, comme une fraise !",
+  "Your ball is blue.|Ta balle est bleue.",
+  "Look, a yellow banana!|Regarde, une banane jaune !",
+  "The grass is green.|L'herbe est verte.",
+  "Find something red!|Trouve quelque chose de rouge !",
+  "Let's count! One, two, three!|On compte ! Un, deux, trois !",
+  "How many ducks? Two ducks!|Combien de canards ? Deux canards !",
+  "One more step!|Encore une marche !",
+  "Five little fingers.|Cinq petits doigts.",
+  "Big ball, little ball.|Grosse balle, petite balle.",
+  "Ready, set, go!|À vos marques, prêts, partez !"],
+  words:["red|rouge","blue|bleu","yellow|jaune","green|vert","orange|orange","pink|rose","purple|violet","white|blanc","black|noir","one|un","two|deux","three|trois","four|quatre","five|cinq"]},
+
+{ id:"cuisine", group:"journee", fr:"En cuisine", en:"Cooking together", bg:"#FF7A6B", fg:"#1E2140", icon:"pot",
+  tip:"Installe bébé près de toi, en sécurité, et décris tes gestes à voix haute : « I'm cutting… I'm stirring… ». C'est le « self-talk ».",
+  phrases:[
+  "Let's cook together!|On cuisine ensemble !",
+  "Let's wash the vegetables.|On lave les légumes.",
+  "Mommy is cutting the carrots.|Maman coupe les carottes.",
+  "I'm stirring the soup.|Je remue la soupe.",
+  "Round and round we go.|On tourne, on tourne.",
+  "Can you hold the spoon?|Tu peux tenir la cuillère ?",
+  "One egg, two eggs.|Un œuf, deux œufs.",
+  "Crack the egg!|On casse l'œuf !",
+  "Pour the milk, slowly.|On verse le lait, doucement.",
+  "Smell that! It smells good.|Sens ça ! Ça sent bon.",
+  "Let's taste it. Is it sweet?|On goûte. C'est sucré ?",
+  "Don't touch, the oven is hot!|Ne touche pas, le four est chaud !",
+  "It needs to cool down.|Il faut que ça refroidisse."],
+  words:["kitchen|cuisine","pot|casserole","pan|poêle","oven|four","spoon|cuillère","carrot|carotte","tomato|tomate","potato|pomme de terre","egg|œuf","milk|lait","flour|farine","stir|remuer","pour|verser","hot|chaud","cold|froid"]},
+
+{ id:"menage", group:"journee", fr:"Le ménage", en:"Tidying up", bg:"#9FE3BF", fg:"#1E2140", icon:"broom",
+  tip:"Annonce toujours le rangement avec la même phrase, « Tidy-up time! ». Bébé reconnaîtra vite le signal.",
+  phrases:[
+  "Tidy-up time!|C'est l'heure de ranger !",
+  "Can you help Mommy?|Tu peux aider maman ?",
+  "Put the toys in the basket.|Mets les jouets dans le panier.",
+  "Where does this go?|Ça se range où ?",
+  "I'm sweeping the floor.|Je balaie le sol.",
+  "Vroom! The vacuum is loud.|Vroum ! L'aspirateur fait du bruit.",
+  "Let's wipe the table.|On essuie la table.",
+  "I'm folding the laundry.|Je plie le linge.",
+  "Here's a sock. Where's the other one?|Voilà une chaussette. Où est l'autre ?",
+  "Into the washing machine!|Hop, dans la machine à laver !",
+  "Thank you for helping!|Merci de m'aider !",
+  "All tidy!|Tout est rangé !"],
+  words:["broom|balai","vacuum|aspirateur","sponge|éponge","cloth|chiffon","bucket|seau","basket|panier","laundry|linge","washing machine|machine à laver","trash can|poubelle","floor|sol","dirty|sale","clean|propre","messy|en désordre","tidy|rangé"]},
+
+{ id:"promenade", group:"journee", fr:"La promenade", en:"Going outside", bg:"#A6D96A", fg:"#1E2140", icon:"tree",
+  tip:"Dehors, pointe du doigt puis nomme : un arbre, un bus, un oiseau. Le geste et le mot ensemble, c'est ce qui marque le plus.",
+  phrases:[
+  "Let's go for a walk!|On va se promener !",
+  "Into the stroller you go!|Hop, dans la poussette !",
+  "Look at the big tree!|Regarde le grand arbre !",
+  "Can you hear the birds?|Tu entends les oiseaux ?",
+  "Look, the leaves are falling.|Regarde, les feuilles tombent.",
+  "Do you want to go on the swing?|Tu veux faire de la balançoire ?",
+  "Up the stairs, and down the slide!|On monte l'escalier, et on descend le toboggan !",
+  "Hold my hand.|Donne-moi la main.",
+  "Wait! We stop at the road.|Attends ! On s'arrête au bord de la route.",
+  "It's windy today.|Il y a du vent aujourd'hui.",
+  "Is it raining? Let's get the umbrella.|Il pleut ? On prend le parapluie.",
+  "Time to go home.|C'est l'heure de rentrer."],
+  words:["tree|arbre","flower|fleur","leaf|feuille","grass|herbe","sky|ciel","park|parc","swing|balançoire","slide|toboggan","sandbox|bac à sable","stroller|poussette","rain|pluie","wind|vent","umbrella|parapluie","puddle|flaque"]},
+
+{ id:"sorties", group:"journee", fr:"Voiture & courses", en:"Out and about", bg:"#9FB4FF", fg:"#1E2140", icon:"car",
+  tip:"Pendant les trajets, joue aux couleurs : « A red car! A blue car! ». Facile à répéter, même au volant.",
+  phrases:[
+  "Let's get in the car.|On monte dans la voiture.",
+  "Click! Your seat belt is on.|Clic ! Ta ceinture est attachée.",
+  "Here we go!|C'est parti !",
+  "Look, a red car!|Regarde, une voiture rouge !",
+  "The light is red. We stop.|Le feu est rouge. On s'arrête.",
+  "Green means go!|Vert, on y va !",
+  "We're going to the supermarket.|On va au supermarché.",
+  "Let's put the apples in the cart.|On met les pommes dans le chariot.",
+  "Can you wave to the lady?|Tu fais coucou à la dame ?",
+  "We're going to see Grandma!|On va voir mamie !",
+  "We're almost home.|On est presque à la maison."],
+  words:["car|voiture","car seat|siège auto","seat belt|ceinture","truck|camion","bus|bus","train|train","plane|avion","bike|vélo","road|route","store|magasin","cart|chariot","bag|sac","apple|pomme"]},
+
+{ id:"bain", group:"soir", fr:"Le bain", en:"Bath time", bg:"#5BB8F0", fg:"#1E2140", icon:"duck",
+  tip:"Le bain est idéal pour les verbes d'action : splash, pour, wash. Exagère les sons, bébé adore.",
+  phrases:[
+  "It's bath time!|C'est l'heure du bain !",
+  "Let's check the water. Not too hot.|On vérifie l'eau. Pas trop chaude.",
+  "In you go!|Hop, dans l'eau !",
+  "Splash, splash!|Plouf, plouf !",
+  "Look at all the bubbles!|Regarde toutes ces bulles !",
+  "Here's your duck. Quack, quack!|Voilà ton canard. Coin-coin !",
+  "Let's pour the water.|On verse l'eau.",
+  "Let's wash your hair. Close your eyes.|On lave tes cheveux. Ferme les yeux.",
+  "Wash your arms, wash your legs.|On lave tes bras, on lave tes jambes.",
+  "Where's your belly button?|Où est ton nombril ?",
+  "Time to get out.|C'est l'heure de sortir.",
+  "Let's wrap you in your towel.|On t'enveloppe dans ta serviette.",
+  "Nice and clean!|Tout beau, tout propre !"],
+  words:["bath|bain","bathtub|baignoire","water|eau","soap|savon","shampoo|shampoing","bubbles|bulles","towel|serviette","duck|canard","sponge|éponge","wet|mouillé","dry|sec","warm|tiède","splash|éclabousser","belly button|nombril"]},
+
+{ id:"coucher", group:"soir", fr:"Sieste & coucher", en:"Nap & bedtime", bg:"#4B4FB8", fg:"#FFE9A8", icon:"moon",
+  tip:"Garde la même suite de phrases chaque soir. Ces mots deviendront le signal doux et familier du dodo.",
+  phrases:[
+  "Are you sleepy?|Tu as sommeil ?",
+  "It's nap time.|C'est l'heure de la sieste.",
+  "Time for bed.|C'est l'heure d'aller au lit.",
+  "Let's put on your pajamas.|On met ton pyjama.",
+  "Which book do you want?|Quel livre tu veux ?",
+  "Where's your teddy?|Où est ton nounours ?",
+  "Look, the moon is out.|Regarde, la lune est là.",
+  "Let's turn off the light.|On éteint la lumière.",
+  "Shh, it's quiet time.|Chut, c'est le moment calme.",
+  "Close your eyes, sweetheart.|Ferme les yeux, mon cœur.",
+  "Sleep tight!|Dors bien !",
+  "Sweet dreams.|Fais de beaux rêves.",
+  "Goodnight, I love you.|Bonne nuit, je t'aime.",
+  "See you in the morning.|À demain matin."],
+  words:["night|nuit","nap|sieste","moon|lune","stars|étoiles","bed|lit","pajamas|pyjama","light|lumière","dark|noir","sleep|dormir","sleepy|qui a sommeil","dream|rêve","teddy|nounours","lullaby|berceuse","quiet|calme"]},
+
+{ id:"repas", group:"toujours", fr:"Les repas", en:"Mealtime", bg:"#FF9F5A", fg:"#1E2140", icon:"bowl",
+  tip:"Nomme chaque aliment en le montrant, puis laisse une petite pause. Bébé répondra d'abord par un geste ou un son.",
+  phrases:[
+  "Time to eat!|C'est l'heure de manger !",
+  "Let's sit in your high chair.|On s'assoit dans ta chaise haute.",
+  "Here's your bib.|Voilà ton bavoir.",
+  "Open wide!|Ouvre grand !",
+  "Careful, it's hot. Let's blow on it.|Attention, c'est chaud. On souffle dessus.",
+  "Is it yummy?|C'est bon ?",
+  "Do you want more?|Tu en veux encore ?",
+  "Can you say “more, please”?|Tu peux dire « encore, s'il te plaît » ?",
+  "Use your spoon.|Prends ta cuillère.",
+  "Take a sip of water.|Bois une gorgée d'eau.",
+  "All gone!|Tout est fini !",
+  "Are you full?|Tu n'as plus faim ?",
+  "Let's wipe your hands and face.|On essuie tes mains et ton visage."],
+  words:["spoon|cuillère","bowl|bol","plate|assiette","cup|gobelet","bottle|biberon","bib|bavoir","high chair|chaise haute","water|eau","milk|lait","banana|banane","apple|pomme","bread|pain","cheese|fromage","yummy|miam, c'est bon"]},
+
+{ id:"soins", group:"toujours", fr:"Soins & hygiène", en:"Washing & care", bg:"#7FD6C8", fg:"#1E2140", icon:"spark",
+  tip:"Pour les soins moins appréciés (nez, ongles), garde une phrase rituelle, toujours la même. Elle rassure autant qu'elle enseigne.",
+  phrases:[
+  "Let's wash your hands.|On se lave les mains.",
+  "Rub, rub, rub!|On frotte, on frotte !",
+  "Let's brush your teeth.|On se brosse les dents.",
+  "Open your mouth and say “ahh”.|Ouvre la bouche et dis « ahh ».",
+  "Brush, brush, all clean!|On brosse, on brosse, tout propre !",
+  "Let's wipe your nose.|On mouche ton nez.",
+  "Let's cut your nails. Stay still.|On coupe tes ongles. Ne bouge pas.",
+  "Let's brush your hair.|On brosse tes cheveux.",
+  "Achoo! Bless you!|Atchoum ! À tes souhaits !",
+  "Does it hurt? Let me kiss it better.|Ça fait mal ? Un petit bisou magique.",
+  "Your new tooth is coming!|Ta nouvelle dent arrive !",
+  "All done! You were so good.|C'est fini ! Tu as été très sage."],
+  words:["toothbrush|brosse à dents","toothpaste|dentifrice","tooth|dent","teeth|dents","soap|savon","tissue|mouchoir","nails|ongles","hairbrush|brosse à cheveux","comb|peigne","clean|propre","dirty|sale","wash|laver"]},
+
+{ id:"calins", group:"toujours", fr:"Émotions & câlins", en:"Feelings & cuddles", bg:"#FF8FA3", fg:"#1E2140", icon:"heart",
+  tip:"Mettre un mot sur l'émotion (« You're sad ») aide bébé à se sentir compris, quelle que soit la langue.",
+  phrases:[
+  "I love you so much!|Je t'aime tellement !",
+  "Give me a hug!|Fais-moi un câlin !",
+  "A big kiss for you.|Un gros bisou pour toi.",
+  "Show me your smile!|Montre-moi ton sourire !",
+  "You're so happy!|Tu es tout content !",
+  "Are you sad? Come here.|Tu es triste ? Viens là.",
+  "It's okay, Mommy's here.|Ça va, maman est là.",
+  "Oh, you're angry. I understand.|Oh, tu es en colère. Je comprends.",
+  "Did you get scared?|Tu as eu peur ?",
+  "Are you tired?|Tu es fatigué ?",
+  "Let's take a deep breath.|On prend une grande respiration.",
+  "You're so brave!|Tu es tellement courageux !",
+  "I'm proud of you.|Je suis fière de toi."],
+  words:["happy|content","sad|triste","angry|en colère","scared|qui a peur","tired|fatigué","hug|câlin","kiss|bisou","smile|sourire","cry|pleurer","laugh|rire","love|amour, aimer","gentle|doux"]},
+
+{ id:"consignes", group:"toujours", fr:"Consignes & sécurité", en:"Rules & safety", bg:"#FFB020", fg:"#1E2140", icon:"alert",
+  tip:"Pour les consignes : des phrases très courtes, un ton calme et ferme, toujours formulées de la même façon.",
+  phrases:[
+  "No, no. That's dangerous.|Non, non. C'est dangereux.",
+  "Hot! Don't touch.|Chaud ! Ne touche pas.",
+  "Gentle, please.|Doucement, s'il te plaît.",
+  "Stop!|Stop !",
+  "Come here, please.|Viens ici, s'il te plaît.",
+  "Not in your mouth!|Pas dans la bouche !",
+  "Sit down, please.|Assieds-toi, s'il te plaît.",
+  "Wait for Mommy.|Attends maman.",
+  "Give it to me, please.|Donne-le-moi, s'il te plaît.",
+  "Be careful!|Fais attention !",
+  "Let's share.|On partage.",
+  "Thank you!|Merci !",
+  "Well done!|Bien joué !"],
+  words:["yes|oui","no|non","please|s'il te plaît","thank you|merci","sorry|pardon","stop|stop, arrête","wait|attendre","careful|attention","hot|chaud","sharp|coupant","dangerous|dangereux","gentle|doucement","share|partager"]}
+];
+
+const GROUPS = [["matin","Le matin"],["journee","La journée"],["soir","Le soir"],["toujours","À tout moment"]];
+
+/* ================= Icônes ================= */
+const G = {
+  sun:'<circle cx="16" cy="16" r="5.5"/><path d="M16 3.5V7M16 25v3.5M3.5 16H7M25 16h3.5M7.2 7.2l2.4 2.4M22.4 22.4l2.4 2.4M7.2 24.8l2.4-2.4M22.4 9.6l2.4-2.4"/>',
+  shirt:'<path d="M11.5 5.5 5 9l-2 5.5 4.5 1.5 1.5-2.5V27h14V13.5l1.5 2.5 4.5-1.5L27 9l-6.5-3.5c-.8 2-2.6 3.2-4.5 3.2s-3.7-1.2-4.5-3.2Z"/>',
+  blocks:'<rect x="4.5" y="17" width="10.5" height="10.5" rx="2"/><rect x="17" y="17" width="10.5" height="10.5" rx="2"/><rect x="10.75" y="5" width="10.5" height="10.5" rx="2"/>',
+  body:'<circle cx="16" cy="7.5" r="3.5"/><path d="M16 12v9M8.5 15.5h15M16 21l-5 6.5M16 21l5 6.5"/>',
+  paw:'<g fill="currentColor" stroke="none"><ellipse cx="16" cy="21" rx="6.5" ry="5.5"/><circle cx="8" cy="13.5" r="2.7"/><circle cx="13" cy="8.5" r="2.7"/><circle cx="19" cy="8.5" r="2.7"/><circle cx="24" cy="13.5" r="2.7"/></g>',
+  dots:'<circle cx="6" cy="21" r="3" fill="currentColor" stroke="none"/><circle cx="14.5" cy="19" r="5"/><circle cx="24.5" cy="17.5" r="6.5" fill="currentColor" stroke="none"/>',
+  pot:'<path d="M6 14h20v7.5c0 3-2.5 5.5-5.5 5.5h-9C8.5 27 6 24.5 6 21.5Z"/><path d="M9.5 14c0-3.2 3-5 6.5-5s6.5 1.8 6.5 5M16 9V6.5M6 16.5H3M26 16.5h3"/>',
+  broom:'<path d="M24.5 4 16.5 15"/><path d="M12.5 13.5l7 5-4.5 9L5 21.5Z"/><path d="M10 19.5l-2 5M13.5 22l-2 4.5"/>',
+  tree:'<circle cx="16" cy="12.5" r="8"/><path d="M16 20.5V28M10 28h12M16 24.5l-3-3"/>',
+  car:'<path d="M4 22v-4.5L8 11.5h15l5 6V22Z"/><path d="M13 11.5v6M4 17.5h24"/><circle cx="10" cy="22.5" r="3" fill="currentColor"/><circle cx="22.5" cy="22.5" r="3" fill="currentColor"/>',
+  duck:'<path d="M5 18.5c0 5.5 5 8.5 11.5 8.5S28 23.5 28 18.5c0-2-2.8-2.5-5-1.3-1.8-.6-2.6-2.4-1.8-4.4 1-2.4.4-6.6-3.7-7.3-3.7-.6-6.3 2-6.3 5.3 0 1.6.6 2.9 1.5 3.8-4.2-.4-7.7 1-7.7 3.7Z"/><path d="M21.5 9.5l5 1-5 2"/><circle cx="17.3" cy="10" r="1.3" fill="currentColor" stroke="none"/>',
+  moon:'<path d="M27 18.2A11.5 11.5 0 1 1 13.8 5a9 9 0 0 0 13.2 13.2Z"/><path d="M24 4.5v4M22 6.5h4"/>',
+  bowl:'<path d="M4.5 15h23c0 6-5 10.5-11.5 10.5S4.5 21 4.5 15Z"/><path d="M11 11c-1-1.5 1-2.5 0-4.5M16 11c-1-1.5 1-2.5 0-4.5M21 11c-1-1.5 1-2.5 0-4.5"/>',
+  spark:'<path d="M16 4l2.6 9.4L28 16l-9.4 2.6L16 28l-2.6-9.4L4 16l9.4-2.6Z"/>',
+  heart:'<path d="M16 26C6.5 19.5 4 15.5 4 11.8 4 8.6 6.6 6 9.8 6c2.6 0 4.6 1.6 6.2 4 1.6-2.4 3.6-4 6.2-4C25.4 6 28 8.6 28 11.8c0 3.7-2.5 7.7-12 14.2Z"/>',
+  alert:'<circle cx="16" cy="16" r="12"/><path d="M16 9.5V18"/><circle cx="16" cy="22.5" r="1.7" fill="currentColor" stroke="none"/>'
+};
+const svg = (inner, vb="0 0 24 24", sw=2.2) => `<svg viewBox="${vb}" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+const I = {
+  speaker: svg('<path d="M11 5 6 9H2v6h4l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.8 5.2a9.5 9.5 0 0 1 0 13.6"/>'),
+  star: svg('<path d="M12 2.8l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3.1 1.1-6.5L2.6 9.6l6.5-.9Z"/>'),
+  check: svg('<path d="M20 6 9 17l-5-5"/>', "0 0 24 24", 2.6),
+  back: svg('<path d="M15 18l-6-6 6-6"/>', "0 0 24 24", 2.6),
+  chev: svg('<path d="M9 18l6-6-6-6"/>'),
+  close: svg('<path d="M18 6 6 18M6 6l12 12"/>', "0 0 24 24", 2.4),
+  search: svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>'),
+  play: svg('<path d="M7 5v14l11-7Z" fill="currentColor"/>'),
+  stop: svg('<rect x="6.5" y="6.5" width="11" height="11" rx="2" fill="currentColor"/>'),
+  cards: svg('<rect x="3" y="6" width="13" height="15" rx="2.5"/><path d="M8 3h10.5A2.5 2.5 0 0 1 21 5.5V16"/>')
+};
+const glyph = t => svg(G[t.icon], "0 0 32 32", 2.4);
+const tv = t => `--tile:${t.bg};--tile-fg:${t.fg}`;
+
+/* ================= Données dérivées ================= */
+const TMAP = {}, ITEM = {}, PHRASES = [], WORDS = [];
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+THEMES.forEach(t => {
+  TMAP[t.id] = t;
+  t.p = t.phrases.map((s, i) => { const [en, fr] = s.split("|"); const it = { key:`${t.id}-p${i}`, en, fr, theme:t.id, type:"p" }; ITEM[it.key] = it; PHRASES.push(it); return it; });
+  t.w = t.words.map((s, i) => { const [en, fr] = s.split("|"); const it = { key:`${t.id}-w${i}`, en, fr, theme:t.id, type:"w" }; ITEM[it.key] = it; WORDS.push(it); return it; });
+  const pat = t.w.map(w => w.en).sort((a, b) => b.length - a.length).map(reEsc).join("|");
+  t.re = new RegExp(`\\b(?:${pat})(?:s|es)?\\b`, "gi");
+});
+
+/* ================= Préférences locales ================= */
+const KEY = "hellobebe.v1";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
+const S = { accent: saved.accent === "en-GB" ? "en-GB" : "en-US", slow: !!saved.slow, tab: "phrases" };
+const favs = new Set(Array.isArray(saved.favs) ? saved.favs.filter(k => ITEM[k]) : []);
+const learned = new Set(Array.isArray(saved.learned) ? saved.learned.filter(k => ITEM[k]) : []);
+function persist(){ try { localStorage.setItem(KEY, JSON.stringify({ accent:S.accent, slow:S.slow, favs:[...favs], learned:[...learned] })); } catch (e) {} }
+
+/* ================= Utilitaires ================= */
+const $ = s => document.querySelector(s);
+const app = $("#app"), PR = $("#practice");
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const frTxt = s => esc(s).replace(/ ([!?:;»])/g, " $1").replace(/« /g, "« ");
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’']/g, "'");
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const reduceMotion = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
+function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function mulberry32(a){ return function(){ a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+let toastTimer;
+function toast(msg){ const el = $("#toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 2200); }
+function highlight(it){ const t = TMAP[it.theme]; t.re.lastIndex = 0; return esc(it.en).replace(t.re, m => `<mark>${m}</mark>`); }
+const learnedIn = t => t.p.filter(it => learned.has(it.key)).length;
+
+/* ================= Voix ================= */
+const synth = ("speechSynthesis" in window) ? window.speechSynthesis : null;
+let voices = [];
+function loadVoices(){ try { voices = synth ? synth.getVoices() : []; } catch (e) { voices = []; } }
+if (synth) { loadVoices(); try { synth.addEventListener("voiceschanged", loadVoices); } catch (e) { synth.onvoiceschanged = loadVoices; } }
+const PREF = { "en-US":["Samantha","Google US English","Aria","Jenny","Allison","Ava"], "en-GB":["Serena","Kate","Google UK English Female","Sonia","Libby","Daniel"] };
+function pickVoice(){
+  const lang = S.accent.toLowerCase();
+  const m = voices.filter(v => (v.lang || "").replace("_","-").toLowerCase().startsWith(lang));
+  for (const n of PREF[S.accent]) { const v = m.find(v => v.name.includes(n)); if (v) return v; }
+  return m[0] || voices.find(v => /^en/i.test(v.lang || "")) || null;
+}
+let speakToken = 0;
+function clearSpeaking(){ document.querySelectorAll(".speaking").forEach(el => el.classList.remove("speaking")); }
+function speak(text, key, done){
+  if (!synth) { toast("L'audio n'est pas disponible sur cet appareil"); done && done(false); return; }
+  try { synth.cancel(); } catch (e) {}
+  clearSpeaking();
+  const token = ++speakToken;
+  const u = new SpeechSynthesisUtterance(text.replace(/[“”"«»]/g, ""));
+  u.lang = S.accent; const v = pickVoice(); if (v) u.voice = v;
+  u.rate = S.slow ? 0.62 : 0.9; u.pitch = 1.05;
+  if (key) document.querySelectorAll(`[data-key="${key}"]`).forEach(el => el.classList.add("speaking"));
+  const end = ok => { if (token === speakToken) clearSpeaking(); done && done(ok, token); };
+  u.onend = () => end(true); u.onerror = () => end(false);
+  try { synth.speak(u); } catch (e) { end(false); }
+}
+
+/* Lecture continue d'un thème */
+let queue = null;
+function haltQueue(){ if (!queue) return; clearTimeout(queue.timer); queue = null; updatePlayAll(); }
+function stopAll(){ const had = !!queue; haltQueue(); if (had) { try { synth && synth.cancel(); } catch (e) {} clearSpeaking(); } }
+function updatePlayAll(){ const b = $("#playall"); if (!b) return; b.innerHTML = queue ? `${I.stop} Arrêter` : `${I.play} Tout écouter`; b.setAttribute("aria-pressed", queue ? "true" : "false"); }
+function playAll(t){
+  if (queue) { stopAll(); return; }
+  if (!synth) { toast("L'audio n'est pas disponible sur cet appareil"); return; }
+  const q = { i:0, timer:null }; queue = q; updatePlayAll();
+  const next = () => {
+    if (queue !== q) return;
+    if (q.i >= t.p.length) { haltQueue(); toast("Thème écouté en entier"); return; }
+    const it = t.p[q.i++];
+    const row = document.querySelector(`.row[data-key="${it.key}"]`);
+    if (row) row.scrollIntoView({ block:"nearest", behavior: reduceMotion() ? "auto" : "smooth" });
+    speak(it.en, it.key, ok => { if (queue !== q) return; if (!ok) { haltQueue(); return; } q.timer = setTimeout(next, 1500); });
+  };
+  next();
+}
+
+/* ================= Rendus ================= */
+function rowHTML(it, o = {}){
+  const t = TMAP[it.theme];
+  const kicker = o.kicker ? `<span class="kicker"><i></i>${it.type === "w" ? "Mot · " : ""}${esc(t.fr)}</span>` : "";
+  const en = (o.plain || it.type === "w") ? esc(it.en) : highlight(it);
+  const toggles = it.type === "w" ? "" :
+    `<button class="tog star" data-act="fav" aria-pressed="${favs.has(it.key)}" aria-label="Garder en favori">${I.star}</button>` +
+    (o.compact ? "" : `<button class="tog done" data-act="done" aria-pressed="${learned.has(it.key)}" aria-label="Je la maîtrise">${I.check}</button>`);
+  return `<li class="row" data-key="${it.key}" style="${tv(t)}">
+    <button class="play" data-act="play" aria-label="Écouter : ${esc(it.en)}">${I.speaker}</button>
+    <div class="txt" data-act="play">${kicker}<div class="en" lang="en">${en}</div><div class="fr">${frTxt(it.fr)}</div></div>
+    ${toggles}</li>`;
+}
+function tileHTML(t){
+  const d = learnedIn(t), pct = Math.round(d / t.p.length * 100);
+  return `<a class="tile" href="#${t.id}" style="${tv(t)}">
+    <span class="glyph">${glyph(t)}</span>
+    <span class="name">${esc(t.fr)}</span><span class="sub" lang="en">${esc(t.en)}</span>
+    <span class="meter" aria-hidden="true"><i style="width:${pct}%"></i></span>
+    <span class="count">${d} / ${t.p.length} maîtrisées</span></a>`;
+}
+function dayPicks(){
+  const d = new Date(); const r = mulberry32(d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate());
+  const used = new Set(), out = [];
+  while (out.length < 3) { const t = THEMES[Math.floor(r() * THEMES.length)]; if (used.has(t.id)) continue; used.add(t.id); out.push(t.p[Math.floor(r() * t.p.length)]); }
+  return out;
+}
+function momentTheme(){
+  const h = new Date().getHours();
+  const map = [[6,9,"reveil"],[9,11,"jeux"],[11,13,"repas"],[13,15,"coucher"],[15,17,"promenade"],[17,18,"cuisine"],[18,19,"bain"],[19,21,"coucher"]];
+  const f = map.find(([a, b]) => h >= a && h < b);
+  return { t: TMAP[f ? f[2] : "calins"], h };
+}
+function seg(act, opts, val){
+  return `<div class="seg" role="group">${opts.map(([v, l]) => `<button data-act="${act}" data-v="${v}" aria-pressed="${v === val}">${l}</button>`).join("")}</div>`;
+}
+
+let view = "home", current = null, homeScroll = 0;
+
+function renderHome(){
+  view = "home"; current = null;
+  const now = new Date();
+  const date = cap(now.toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"long" }));
+  const m = momentTheme();
+  app.innerHTML = `
+  <header class="home-head">
+    <div><h1 class="brand">Hello <span>Bébé</span></h1>
+    <p class="lede">L'anglais du quotidien, à glisser dans chaque moment avec ton tout-petit.</p></div>
+    <a class="favbtn" href="#favoris" aria-label="Mes favoris (${favs.size})">${I.star}<span id="favcount">${favs.size}</span></a>
+  </header>
+  ${synth ? "" : `<p class="notice">La lecture audio n'est pas disponible sur ce navigateur. Les phrases restent lisibles.</p>`}
+  <section class="today" aria-labelledby="today-h">
+    <div class="eyebrow">${esc(date)}</div>
+    <h2 id="today-h">Les 3 phrases du jour</h2>
+    <ul class="rows">${dayPicks().map(it => rowHTML(it, { kicker:true, compact:true, plain:true })).join("")}</ul>
+    <button class="btn inv" data-act="practice-all">${I.cards} Révision express · 10 cartes</button>
+  </section>
+  <a class="moment" href="#${m.t.id}" style="${tv(m.t)}">
+    <span class="glyph">${glyph(m.t)}</span>
+    <span><small>Il est ${m.h} h, c'est le moment pour</small><b>${esc(m.t.fr)}</b></span>${I.chev.replace("<svg", '<svg class="chev"')}
+  </a>
+  <div class="search">${I.search}<input id="q" type="search" placeholder="Chercher un mot, en anglais ou en français" autocomplete="off" aria-label="Chercher une phrase ou un mot"></div>
+  <div id="results" hidden></div>
+  <div id="browse">
+    ${GROUPS.map(([g, label]) => `<section><h3 class="group-h">${label}</h3><div class="tiles">${THEMES.filter(t => t.group === g).map(tileHTML).join("")}</div></section>`).join("")}
+    <section class="settings" aria-labelledby="set-h">
+      <h3 class="group-h" id="set-h">Réglages de la voix</h3>
+      <div class="setlist">
+        <div class="setrow"><div><b>Accent</b><small>Utilise la voix anglaise de ton téléphone</small></div>${seg("accent", [["en-US","Américain"],["en-GB","Britannique"]], S.accent)}</div>
+        <div class="setrow"><div><b>Vitesse</b><small>Lente pour bien entendre chaque mot</small></div>${seg("speed", [["0","Normale"],["1","Lente"]], S.slow ? "1" : "0")}</div>
+        <div class="setrow" id="resetrow">${resetRowHTML()}</div>
+      </div>
+    </section>
+  </div>
+  <p class="foot">${PHRASES.length} phrases et ${WORDS.length} mots, répartis en ${THEMES.length} moments de la journée.</p>`;
+  const q = $("#q");
+  q.addEventListener("input", () => runSearch(q.value));
+}
+function resetRowHTML(confirm){
+  if (confirm) return `<div><b>Tout effacer ?</b><small>Favoris et phrases maîtrisées seront remis à zéro.</small></div><div class="confirm"><button class="btn sm danger" data-act="reset-yes">Oui, effacer</button><button class="btn sm ghost" data-act="reset-no">Annuler</button></div>`;
+  return `<div><b>Progression</b><small>${learned.size} phrases maîtrisées · ${favs.size} favoris</small></div><button class="btn sm ghost" data-act="reset">Remettre à zéro</button>`;
+}
+function runSearch(raw){
+  const q = norm(raw.trim()), res = $("#results"), br = $("#browse");
+  if (q.length < 2) { res.hidden = true; br.hidden = false; res.innerHTML = ""; return; }
+  const items = [...PHRASES, ...WORDS].filter(it => norm(it.en).includes(q) || norm(it.fr).includes(q)).slice(0, 60);
+  res.hidden = false; br.hidden = true;
+  res.innerHTML = items.length
+    ? `<h3 class="group-h">${items.length} résultat${items.length > 1 ? "s" : ""}</h3><ul class="list rows">${items.map(it => rowHTML(it, { kicker:true, plain:true })).join("")}</ul>`
+    : `<h3 class="group-h">Aucun résultat</h3><p class="empty">Rien ne contient « ${esc(raw.trim())} ». Essaie un autre mot, en anglais ou en français.</p>`;
+}
+
+function renderTheme(id){
+  view = "theme"; current = id; const t = TMAP[id];
+  app.innerHTML = `
+  <div class="topbar"><a class="back" href="#">${I.back}<span>Thèmes</span></a><span class="topt">${esc(t.fr)}</span></div>
+  <section class="hero" style="${tv(t)}">
+    <div class="big">${glyph(t)}</div>
+    <div><h1>${esc(t.fr)}</h1><div class="en-title" lang="en">${esc(t.en)}</div></div>
+    <p class="tip"><b>Astuce</b>${frTxt(t.tip)}</p>
+  </section>
+  <div class="toolbar">
+    ${seg("tab", [["phrases", `Phrases <span>${t.p.length}</span>`], ["words", `Vocabulaire <span>${t.w.length}</span>`]], S.tab)}
+    <div class="tb-actions">
+      <button class="btn sm ghost" data-act="slow" aria-pressed="${S.slow}">Lent</button>
+      <button class="btn sm ghost" id="playall" data-act="playall" aria-pressed="false">${I.play} Tout écouter</button>
+      <button class="btn sm" data-act="practice">${I.cards} S'entraîner</button>
+    </div>
+  </div>
+  <div id="pane" style="${tv(t)}"></div>`;
+  renderPane();
+}
+function renderPane(){
+  const t = TMAP[current], pane = $("#pane"); if (!pane) return;
+  $("#playall").hidden = S.tab !== "phrases";
+  if (S.tab === "words") {
+    pane.innerHTML = `<p class="hint">Touche un mot pour l'entendre.</p><div class="words">${t.w.map(w => `<button class="word" data-act="play" data-key="${w.key}"><b lang="en">${esc(w.en)}</b><span>${esc(w.fr)}</span></button>`).join("")}</div>`;
+  } else {
+    pane.innerHTML = `<div class="progress"><span id="prog"></span><span class="meter" aria-hidden="true"><i id="progbar"></i></span></div>
+      <p class="hint">Touche une phrase pour l'entendre. Les mots surlignés sont dans le vocabulaire du thème.</p>
+      <ul class="list rows">${t.p.map(it => rowHTML(it)).join("")}</ul>`;
+    updateProgress();
+  }
+}
+function updateProgress(){
+  const p = $("#prog"); if (!p || !current) return;
+  const t = TMAP[current], d = learnedIn(t);
+  p.textContent = `${d} / ${t.p.length} maîtrisées`;
+  $("#progbar").style.width = Math.round(d / t.p.length * 100) + "%";
+}
+
+function renderFavs(){
+  view = "favs"; current = null;
+  const order = PHRASES.map(p => p.key);
+  const items = order.filter(k => favs.has(k)).map(k => ITEM[k]);
+  app.innerHTML = `
+  <div class="topbar"><a class="back" href="#">${I.back}<span>Thèmes</span></a></div>
+  <h1 class="page-h">Mes favoris</h1>
+  <p class="lede">Les phrases que tu veux garder sous la main.</p>
+  ${items.length
+    ? `<div class="toolbar"><span class="hint" style="margin:0">${items.length} phrase${items.length > 1 ? "s" : ""}</span><button class="btn sm" data-act="practice-favs">${I.cards} S'entraîner</button></div><ul class="list rows">${items.map(it => rowHTML(it, { kicker:true })).join("")}</ul>`
+    : `<p class="empty" style="margin-top:18px">Aucun favori pour l'instant. Touche l'étoile à côté d'une phrase pour la retrouver ici.</p>`}`;
+}
+
+/* ================= Navigation ================= */
+function route(){
+  if (!PR.hidden) closePractice(true);
+  stopAll();
+  if (view === "home") homeScroll = window.scrollY;
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (TMAP[h]) { if (current !== h) S.tab = "phrases"; renderTheme(h); window.scrollTo(0, 0); }
+  else if (h === "favoris") { renderFavs(); window.scrollTo(0, 0); }
+  else { renderHome(); window.scrollTo(0, homeScroll); }
+}
+window.addEventListener("hashchange", route);
+window.addEventListener("scroll", () => { const tb = document.querySelector(".topbar"); if (tb) tb.classList.toggle("scrolled", window.scrollY > 140); }, { passive:true });
+
+/* ================= Interactions ================= */
+function setToggle(set, key, act){
+  const on = !set.has(key); on ? set.add(key) : set.delete(key); persist();
+  document.querySelectorAll(`.row[data-key="${key}"] [data-act="${act}"]`).forEach(b => b.setAttribute("aria-pressed", on));
+  return on;
+}
+app.addEventListener("click", e => {
+  const a = e.target.closest("[data-act]"); if (!a) return;
+  const act = a.dataset.act;
+  const key = a.dataset.key || (a.closest("[data-key]") || {}).dataset?.key;
+  switch (act) {
+    case "play": { haltQueue(); const it = ITEM[key]; if (it) speak(it.en, key); break; }
+    case "fav": {
+      const on = setToggle(favs, key, "fav");
+      const c = $("#favcount"); if (c) c.textContent = favs.size;
+      toast(on ? "Ajoutée aux favoris" : "Retirée des favoris"); break;
+    }
+    case "done": {
+      const on = setToggle(learned, key, "done"); updateProgress();
+      if (on) toast("Bravo, une de plus !"); break;
+    }
+    case "tab": S.tab = a.dataset.v; stopAll(); a.parentElement.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b === a)); renderPane(); break;
+    case "slow": S.slow = !S.slow; persist(); a.setAttribute("aria-pressed", S.slow); toast(S.slow ? "Voix lente" : "Vitesse normale"); break;
+    case "playall": playAll(TMAP[current]); break;
+    case "practice": startPractice(TMAP[current].p.map(i => i.key)); break;
+    case "practice-favs": startPractice([...favs]); break;
+    case "practice-all": startPractice(PHRASES.map(i => i.key)); break;
+    case "accent":
+      S.accent = a.dataset.v; persist();
+      a.parentElement.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b === a));
+      speak("Hello, little one!", null); break;
+    case "speed":
+      S.slow = a.dataset.v === "1"; persist();
+      a.parentElement.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b === a));
+      speak("Let's play together!", null); break;
+    case "reset": $("#resetrow").innerHTML = resetRowHTML(true); break;
+    case "reset-no": $("#resetrow").innerHTML = resetRowHTML(); break;
+    case "reset-yes": favs.clear(); learned.clear(); persist(); renderHome(); toast("Progression remise à zéro"); break;
+  }
+});
+
+/* ================= Entraînement (cartes) ================= */
+let pr = null;
+function startPractice(keys){
+  const items = keys.map(k => ITEM[k]).filter(Boolean);
+  if (!items.length) return;
+  stopAll();
+  const deck = [...shuffle(items.filter(i => !learned.has(i.key))), ...shuffle(items.filter(i => learned.has(i.key)))].slice(0, 10);
+  pr = { deck, i:0, known:0, revealed:false, source:keys };
+  PR.hidden = false; document.documentElement.style.overflow = "hidden";
+  renderPractice();
+}
+function closePractice(silent){
+  PR.hidden = true; PR.innerHTML = ""; pr = null; document.documentElement.style.overflow = "";
+  try { synth && synth.cancel(); } catch (e) {}
+  if (!silent) { const y = window.scrollY; if (view === "theme") { renderTheme(current); } else if (view === "favs") renderFavs(); else renderHome(); window.scrollTo(0, y); }
+}
+function renderPractice(){
+  const n = pr.deck.length;
+  if (pr.i >= n) {
+    const msg = pr.known === n ? "Parfait !" : pr.known >= n / 2 ? "Très bien !" : "Bon début !";
+    PR.innerHTML = `<div class="pr-inner">
+      <div class="pr-top"><button class="iconbtn" data-pact="close" aria-label="Fermer">${I.close}</button><div class="pr-bar"><i style="width:100%"></i></div><span class="pr-count">${n} / ${n}</span></div>
+      <div class="pr-card" style="--tile:var(--accent);--tile-fg:var(--accent-ink)">
+        <div class="pr-theme">${msg}</div>
+        <div class="pr-score">${pr.known} / ${n}</div>
+        <div class="pr-fr">phrase${pr.known > 1 ? "s" : ""} que tu savais déjà dire</div>
+        <div class="pr-q">Elles sont maintenant marquées comme maîtrisées.</div>
+      </div>
+      <div class="pr-actions"><button class="btn ghost" data-pact="close">Terminer</button><button class="btn" data-pact="restart">Nouvelle série</button></div>
+    </div>`;
+    PR.querySelector('[data-pact="restart"]').focus();
+    return;
+  }
+  const it = pr.deck[pr.i], t = TMAP[it.theme];
+  PR.innerHTML = `<div class="pr-inner">
+    <div class="pr-top"><button class="iconbtn" data-pact="close" aria-label="Fermer">${I.close}</button><div class="pr-bar"><i style="width:${Math.round(pr.i / n * 100)}%"></i></div><span class="pr-count">${pr.i + 1} / ${n}</span></div>
+    <div class="pr-card" style="${tv(t)}">
+      <div class="pr-theme">${glyph(t)}${esc(t.fr)}</div>
+      <div class="pr-q">Comment le dire en anglais ?</div>
+      <div class="pr-fr">${frTxt(it.fr)}</div>
+      ${pr.revealed ? `<div class="pr-en" lang="en">${esc(it.en)}</div><button class="pr-listen" data-pact="listen">${I.speaker} Réécouter</button>` : ""}
+    </div>
+    ${pr.revealed
+      ? `<div class="pr-actions"><button class="btn ghost" data-pact="again">À revoir</button><button class="btn" data-pact="knew">${I.check} Je savais</button></div>`
+      : `<p class="pr-say">Dis-la à voix haute, puis vérifie.</p><div class="pr-actions"><button class="btn" data-pact="reveal">Voir la réponse</button></div>`}
+  </div>`;
+  const f = PR.querySelector(pr.revealed ? '[data-pact="knew"]' : '[data-pact="reveal"]'); if (f) f.focus({ preventScroll:true });
+}
+PR.addEventListener("click", e => {
+  const b = e.target.closest("[data-pact]"); if (!b || !pr) return;
+  const a = b.dataset.pact, it = pr.deck[pr.i];
+  if (a === "close") return closePractice();
+  if (a === "restart") return startPractice(pr.source);
+  if (a === "reveal") { pr.revealed = true; renderPractice(); speak(it.en, null); }
+  if (a === "listen") speak(it.en, null);
+  if (a === "knew" || a === "again") {
+    if (a === "knew") { learned.add(it.key); persist(); pr.known++; }
+    pr.i++; pr.revealed = false; try { synth && synth.cancel(); } catch (e) {}
+    renderPractice();
+  }
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !PR.hidden) closePractice(); });
+
+route();
+</script>
+<script>if ("serviceWorker" in navigator && location.protocol.startsWith("http")) { navigator.serviceWorker.register("sw.js").catch(() => {}); }</script>
+</body>
+</html>
